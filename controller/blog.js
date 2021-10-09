@@ -1,5 +1,6 @@
 const BlogModel = require("./../models/blog");
 const AddBlog = (req, res) => {
+  console.log(req.file);
   const newBlog = BlogModel({
     title: req.body.title,
     description: req.body.description,
@@ -23,9 +24,9 @@ const AllBlogs = async (req, res) => {
   }
 };
 
-const DeleteBlog = (req, res) => {
+const DeleteBlog = async (req, res) => {
   try {
-    BlogModel.deleteOne({
+    await BlogModel.deleteOne({
       _id: req.params.id,
     });
     res.status(200).json("Blog supprimé");
