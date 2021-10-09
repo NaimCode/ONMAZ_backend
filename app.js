@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const blogsRoute = require("./view/blog");
 const app = express();
@@ -10,6 +11,7 @@ mongoose
   .catch((error) => console.log(error));
 
 const port = process.env.PORT || 5000;
+app.use(cors());
 app.use(express.json());
 app.use("/blogs", blogsRoute);
 app.listen(port, () => console.log("Server is running"));

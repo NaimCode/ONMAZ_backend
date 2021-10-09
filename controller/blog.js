@@ -23,4 +23,15 @@ const AllBlogs = async (req, res) => {
   }
 };
 
-module.exports = { AddBlog, AllBlogs };
+const DeleteBlog = (req, res) => {
+  try {
+    BlogModel.deleteOne({
+      _id: req.params.id,
+    });
+    res.status(200).json("Blog supprimé");
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+module.exports = { AddBlog, AllBlogs, DeleteBlog };
