@@ -4,7 +4,7 @@ const { upload } = require("../utils/upload");
 const router = require("express").Router();
 
 router.get("/", AllBlogs);
-router.post("/add", upload.single("image"), AddBlog);
+router.post("/add", upload.array("image"), AddBlog);
 router.delete("/:id", DeleteBlog);
 
 module.exports = router;

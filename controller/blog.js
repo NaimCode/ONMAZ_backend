@@ -1,10 +1,10 @@
 const BlogModel = require("./../models/blog");
 const AddBlog = (req, res) => {
-  console.log(req.file);
+  console.log(req.files);
   const newBlog = BlogModel({
     title: req.body.title,
     description: req.body.description,
-    image: "",
+    image: req.files[0].location,
   });
 
   try {
