@@ -11,14 +11,16 @@ const transporter = nodemailer.createTransport({
 });
 
 const AddRD = async (req, res) => {
+  const rv = rvModel({
+    nom: req.body.nom,
+    date: req.body.date,
+    message: req.body.message,
+    tel: req.body.tel,
+    email: req.body.email,
+  });
   try {
-    const rv = new rvModel({
-      nom: req.body.nom,
-      date: req.body.date,
-      message: req.body.message,
-      tel: req.body.tel,
-      email: req.body.email,
-    });
+    rv.save();
+
     transporter.verify(function (error, success) {
       if (error) {
         console.log(error);
@@ -28,11 +30,11 @@ const AddRD = async (req, res) => {
     });
 
     const mailData = {
-      from: req.boyd.email, // sender address
+      from: req.body.email, // sender address
       to: process.env.MAIL, // list of receivers
       subject: "PRISE DE RENVEZ-VOUS",
-      text: `Depuis naimdev.com \n\n Je suis ${name}, \n ${text}`,
-      // html: "<b>Hey there! </b><br> This is our first message sent with Nodemailer<br/>",
+      text: `Nom: ${req.body.nom} \nTel: ${req.body.tel} \nDate: ${req.body.date} \n\n${req.body.message}`,
+      //html: "<h1 style='backgroubColor:red'>Hey there! </h1><br> This is our first message sent with Nodemailer<br/>",
     };
     transporter.sendMail(mailData, function (err, info) {
       if (err) {
